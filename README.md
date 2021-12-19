@@ -45,11 +45,6 @@ Based on the information from section 1, there are two possible outcomes (treatm
     
     b. Consultation with the pharmacist is needed. A paper ticket with the instance ID is printed for the customer. After an in-person consultation with the pharmacist, the customer can get the drugs needed. Process ends.
 
-## Process Details
-under construction
-Integromat as ISaaS platform for the integration scenario. 
-
-
 ## Process Restrictions
 The following simplifications were made:
 - the payment process was not implemented
@@ -57,8 +52,28 @@ The following simplifications were made:
 - no timer events were built into the process (for example when a customer starts a process at the automated consultation screen but leaves the process at a random point without finishing it)
 
 ## BPMN Model of the Process
-![Bild_2021-12-09_203259](https://github.com/DigiBP/Team-Golf/blob/main/Final%20BPMN.png)
+![full BPMN model](https://github.com/DigiBP/Team-Golf/blob/e7fc38f122b44648b8dd4b898901827432557bee/Final_PictureBPMN_SICK-OMAT.png)
 
+## Process Details
+### Google Forms
+At the start of the process (or better said before and with this form our process gets triggered) the customer fills in a form to gather information regarding illness, sympotoms and treatment preferences to provide as the base for the two following automated decisions. The form already contains shortcuts in case a 'red flag symptom' occurs that should be consulted by a person. 
+
+The form can be accessed [here](https://forms.gle/QF4Y9ke4k3DrpKF39).
+
+### Loading form
+With Integromat we watch out for new answers to our form every minute. If a form arrives, we add a random number (0-1000), later called key and post all answers as a message to the heroku REST API to have the answers available in Camunda. (Thanks to Maja for spotting the surplus comma in the json file)
+
+### Choose consultation channel
+Based on the answers there is an automated decision decising the consultation channel. If no red flag sympotoms get detected, an automated medication delivery is possible (upper path). If consultation, a doctor visit or further annamese is needed because of certain sympotoms (acc. to the [photo](https://user-images.githubusercontent.com/68386983/144747725-eb9af31f-c111-4efb-ba93-af1e028c0937.png) in the appendix). 
+
+### Automated consultation channel
+Based on the set preferences by the user, he receives a personalized suggestion for treatment like at counter with all medications needed to treat his/her cold. 
+_Side note: For a real world application we would need to check first, whether the medication is available before we suggest it to the customer._
+
+The customer can then decide on the medication he/she wants of the list and submit the request to an external service (e.g. a BD Rowa) who gathers the medication from some auto-store solution. As we do not have such a service available, we simplified with Integromat: A webhook checks whether a new instance is entering the process step 'Deliver Medication' and triggeres the service in Integromat whereby the ID is fetched&locked, a delivery status (in our case always OK, but in reality the actual status of the delivery) as a variable sent back to Camunda.
+
+### Personal consultation by pharmacist channel
+If personal consultation is needed we print a ticket with the key for the customer and send make all the variables from the GForms visible for the consulting pharmacist.
 
 # Outlook
 The digitalized process presented in this readme is a simplified example of digitalization in a health care process. The following aspects complicate digitalization in this area:
