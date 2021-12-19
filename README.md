@@ -60,8 +60,13 @@ At the start of the process (or better said before and with this form our proces
 
 The form can be accessed [here](https://forms.gle/QF4Y9ke4k3DrpKF39).
 
+![Example of Google Forms question](https://github.com/DigiBP/Team-Golf/blob/5a0cdabf0c3e5d8bef11ba7b5dac2e4c9c13c501/Gforms.PNG) 
+
+
 ### Loading form
-With Integromat we watch out for new answers to our form every minute. If a form arrives, we add a random number (0-1000), later called key and post all answers as a message to the heroku REST API to have the answers available in Camunda. (Thanks to Maja for spotting the surplus comma in the json file)
+With Integromat we watch out for new answers to our form every minute. If a form arrives, we add a random number (0-1000), later called key and post all answers as a message to the heroku REST API to have the answers available in Camunda. (Thanks to Maja for spotting the surplus comma in the json file).
+
+![Integromat Service for loading GForms into Camunda](https://github.com/DigiBP/Team-Golf/blob/d03bd487c30d068f699328e01a5ff8cd84d488c3/Integromat_GFormsLoad.PNG)
 
 ### Choose consultation channel
 Based on the answers there is an automated decision decising the consultation channel. If no red flag sympotoms get detected, an automated medication delivery is possible (upper path). If consultation, a doctor visit or further annamese is needed because of certain sympotoms (acc. to the [photo](https://user-images.githubusercontent.com/68386983/144747725-eb9af31f-c111-4efb-ba93-af1e028c0937.png) in the appendix). 
@@ -71,6 +76,8 @@ Based on the set preferences by the user, he receives a personalized suggestion 
 _Side note: For a real world application we would need to check first, whether the medication is available before we suggest it to the customer._
 
 The customer can then decide on the medication he/she wants of the list and submit the request to an external service (e.g. a BD Rowa) who gathers the medication from some auto-store solution. As we do not have such a service available, we simplified with Integromat: A webhook checks whether a new instance is entering the process step 'Deliver Medication' and triggeres the service in Integromat whereby the ID is fetched&locked, a delivery status (in our case always OK, but in reality the actual status of the delivery) as a variable sent back to Camunda.
+
+![External Service to some auto-store to deliver medication, status message is generated](https://github.com/DigiBP/Team-Golf/blob/0f8b3592603f7d05f5f956c3f841e54a4b635224/Integromat_BD_Rowa_Service.PNG)
 
 ### Personal consultation by pharmacist channel
 If personal consultation is needed we print a ticket with the key for the customer and send make all the variables from the GForms visible for the consulting pharmacist (both with a simple Camunda form in a user task).
