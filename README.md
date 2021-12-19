@@ -76,7 +76,7 @@ _Side note: For a real world application we would need to check first, whether t
 
 The customer can then decide on the medication he/she wants of the list and submit the request to an external service (e.g. a BD Rowa) who gathers the medication from some auto-store solution. As we do not have such a service available, we simplified with Integromat: A webhook checks whether a new instance is entering the process step 'Deliver Medication' and triggeres the service in Integromat whereby the ID is fetched&locked, a delivery status (in our case always OK, but in reality the actual status of the delivery) as a variable sent back to Camunda.
 
-<img src="(https://github.com/DigiBP/Team-Golf/blob/0f8b3592603f7d05f5f956c3f841e54a4b635224/Integromat_BD_Rowa_Service.PNG" width="50%" height="50%">
+<img src="https://github.com/DigiBP/Team-Golf/blob/0f8b3592603f7d05f5f956c3f841e54a4b635224/Integromat_BD_Rowa_Service.PNG" width="50%" height="50%">
 
 ### Personal consultation by pharmacist channel
 If personal consultation is needed we print a ticket with the key for the customer and send make all the variables from the GForms visible for the consulting pharmacist (both with a simple Camunda form in a user task).
