@@ -60,7 +60,7 @@ At the start of the process (or better said before and with this form our proces
 
 The form can be accessed [here](https://forms.gle/QF4Y9ke4k3DrpKF39).
 
-![Example of Google Forms question](https://github.com/DigiBP/Team-Golf/blob/5a0cdabf0c3e5d8bef11ba7b5dac2e4c9c13c501/Gforms.PNG) 
+![Example of Google Forms question](https://github.com/DigiBP/Team-Golf/blob/5a0cdabf0c3e5d8bef11ba7b5dac2e4c9c13c501/Gforms.PNG | width=100) 
 
 
 ### Loading form
