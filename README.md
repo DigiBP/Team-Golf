@@ -60,8 +60,7 @@ At the start of the process (or better said before and with this form our proces
 
 The form can be accessed [here](https://forms.gle/QF4Y9ke4k3DrpKF39).
 
-![Example of Google Forms question](https://github.com/DigiBP/Team-Golf/blob/5a0cdabf0c3e5d8bef11ba7b5dac2e4c9c13c501/Gforms.PNG){:height="50%" width="50%"}
-
+<img src="https://github.com/DigiBP/Team-Golf/blob/5a0cdabf0c3e5d8bef11ba7b5dac2e4c9c13c501/Gforms.PNG" width="50%" height="50%">
 
 ### Loading form
 With Integromat we watch out for new answers to our form every minute. If a form arrives, we add a random number (0-1000), later called key and post all answers as a message to the heroku REST API to have the answers available in Camunda. (Thanks to Maja for spotting the surplus comma in the json file).
