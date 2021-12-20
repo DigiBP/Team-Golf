@@ -56,6 +56,8 @@ The following simplifications were made:
 ## Process Details
 
 ### BPMN Model of the Process
+
+In the BPMN model of the process it can be seen that the pool "Apotheke" consists out of two lanes: The SICK-OMAT (Self Service Counter) and the pharmacist. The SICK-OMAT communicates with the customer and an external medication storage and delivery robot (e.g. BD Rowa). In the following sections, the process is described in his details. 
 ![full BPMN model](https://github.com/DigiBP/Team-Golf/blob/e7fc38f122b44648b8dd4b898901827432557bee/Final_PictureBPMN_SICK-OMAT.png)
 
 ### Google Forms
