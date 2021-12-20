@@ -50,13 +50,16 @@ The following simplifications were made:
 - the payment process was not implemented
 - the interface with the robotic dispense system was not created
 - no timer events were built into the process (for example when a customer starts a process at the automated consultation screen but leaves the process at a random point without finishing it)
-
-## BPMN Model of the Process
-![full BPMN model](https://github.com/DigiBP/Team-Golf/blob/e7fc38f122b44648b8dd4b898901827432557bee/Final_PictureBPMN_SICK-OMAT.png)
+- Only the conventional medicine way is modeled for the happy path (automated medication recommendations). If the customer chooses herbal or homeopathic medicine, he will be forwarded to the pharmacists counter.
+- no customer interfaces for steps like the "selection of the proposed medication" are created
 
 ## Process Details
+
+### BPMN Model of the Process
+![full BPMN model](https://github.com/DigiBP/Team-Golf/blob/e7fc38f122b44648b8dd4b898901827432557bee/Final_PictureBPMN_SICK-OMAT.png)
+
 ### Google Forms
-At the start of the process (or better said before and with this form our process gets triggered) the customer fills in a form to gather information regarding illness, sympotoms and treatment preferences to provide as the base for the two following automated decisions. The form already contains shortcuts in case a 'red flag symptom' occurs that should be consulted by a person. 
+At the start of the process (or better said before and with this form our process gets triggered) the customer fills in a questionnaire based on Google Forms to gather information regarding illness, sympotoms and treatment preferences to provide as the base for the two following automated decisions. The form already contains shortcuts in case a 'red flag symptom' occurs that should be consulted by a person. 
 
 The form can be accessed [here](https://forms.gle/QF4Y9ke4k3DrpKF39).
 
@@ -68,11 +71,11 @@ With Integromat we watch out for new answers to our form every minute. If a form
 <img src="https://github.com/DigiBP/Team-Golf/blob/d03bd487c30d068f699328e01a5ff8cd84d488c3/Integromat_GFormsLoad.PNG" width="50%" height="50%">
 
 ### Choose consultation channel
-Based on the answers there is an automated decision decising the consultation channel. If no red flag sympotoms get detected, an automated medication delivery is possible (upper path). If consultation, a doctor visit or further annamese is needed because of certain sympotoms (acc. to the [photo](https://user-images.githubusercontent.com/68386983/144747725-eb9af31f-c111-4efb-ba93-af1e028c0937.png) in the appendix). 
+Based on the answers there is an automated decision (DMN; Hit Policy: Any) deciding the consultation channel. If the customer is over 18 years old, he has no red flag sympotoms and does not take regularly other medications, an automated medication delivery is possible (upper path/happy path). Otherwise the customer gets printed out a ticket for a counter consultation with a pharmacist because due to his handed in data, a detailled, professional anamnesis interview is needed (acc. to the [photo](https://user-images.githubusercontent.com/68386983/144747725-eb9af31f-c111-4efb-ba93-af1e028c0937.png) in the appendix). 
 
 ### Automated consultation channel
-Based on the set preferences by the user, he receives a personalized suggestion for treatment like at counter with all medications needed to treat his/her cold. 
-_Side note: For a real world application we would need to check first, whether the medication is available before we suggest it to the customer._
+Based on the indicated symptoms and the set preferences by the user, he receives automatically (due to a DMN; Hit Policy: First) a personalized treatment suggestion (like at the counter) with all the medications needed to treat his/her cold symptoms. 
+_Side note: For a real world application we would need to check first, whether the medication is available before we suggest it to the customer. This could be done by colaborating with the company of the dispensing roboter (e.g. BD ROWA) or by a colaboration with the IT-System provider (e.g. ProPharma System AG) of the pharmacy_
 
 The customer can then decide on the medication he/she wants of the list and submit the request to an external service (e.g. a BD Rowa) who gathers the medication from some auto-store solution. As we do not have such a service available, we simplified with Integromat: A webhook checks whether a new instance is entering the process step 'Deliver Medication' and triggeres the service in Integromat whereby the ID is fetched&locked, a delivery status (in our case always OK, but in reality the actual status of the delivery) as a variable sent back to Camunda.
 
