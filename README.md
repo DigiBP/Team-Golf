@@ -12,7 +12,6 @@ Lukas Suter, Dominik Meyer, Roman Zech, David Tschirky
 - [Outlook](#outlook)
 - [Authors](#authors)
 - [Additional Information](#additional-information)
-    - [Links](#links)
     - [Pictures](#pictures)
 
 
@@ -113,8 +112,6 @@ After all, the solution presented here could as well be used as a self-dieagnosi
 
 # Additional Information
 
-## Links
-To see the Project-Pitch Video, please use this [link](https://tube.switch.ch/videos/fEU5UNhHQl)
 
 ## Abbreviations, Definitions
 Expression | Explanation
