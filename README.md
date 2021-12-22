@@ -57,34 +57,34 @@ The following simplifications were made:
 
 ### BPMN Model of the Process
 
-In the BPMN model of the process it can be seen that the pool "Apotheke" consists out of two lanes: The SICK-OMAT (Self Service Counter) and the pharmacist. The SICK-OMAT communicates with the customer and an external medication storage and delivery robot (e.g. BD Rowa). In the following sections, the process is described in his details. 
+In the BPMN model of the process it can be seen that the pool "Apotheke" consists out of two lanes: The SICK-OMAT (Self Service Counter) and the pharmacist. The SICK-OMAT communicates with the customer and an external medication storage and delivery robot (e.g. BD Rowa). In the following sections, the process is described in its details. 
 ![full BPMN model](https://github.com/DigiBP/Team-Golf/blob/e7fc38f122b44648b8dd4b898901827432557bee/Final_PictureBPMN_SICK-OMAT.png)
 
 ### Google Forms
-At the start of the process (or better said before and with this form our process gets triggered) the customer fills in a questionnaire based on Google Forms to gather information regarding illness, sympotoms and treatment preferences to provide as the base for the two following automated decisions. The form already contains shortcuts in case a 'red flag symptom' occurs that should be consulted by a person. 
+At the start of the process (or better said before and with this form our process gets triggered) the customer fills in a questionnaire based on Google Forms to gather information regarding illness, sympotoms and treatment preferences to provide as the base for the two following automated decisions. The form already contains shortcuts in case a 'red flag symptom' occurs that should be consulted by a pharmacist. 
 
 The form can be accessed [here](https://forms.gle/QF4Y9ke4k3DrpKF39).
 
 <img src="https://github.com/DigiBP/Team-Golf/blob/5a0cdabf0c3e5d8bef11ba7b5dac2e4c9c13c501/Gforms.PNG" width="50%" height="50%">
 
 ### Loading form
-With Integromat we watch out for new answers to our form every minute. If a form arrives, we add a random number (0-1000), later called key and post all answers as a message to the heroku REST API to have the answers available in Camunda. (Thanks to Maja for spotting the surplus comma in the json file).
+With Integromat we watch out for new answers to our form every minute. If a form arrives, we add a random number (0-1000), later called "key" and post all answers as a message to the heroku REST API to have the answers available in Camunda. (Thanks to Maja for spotting the surplus comma in the json file).
 
 <img src="https://github.com/DigiBP/Team-Golf/blob/d03bd487c30d068f699328e01a5ff8cd84d488c3/Integromat_GFormsLoad.PNG" width="50%" height="50%">
 
 ### Choose consultation channel
-Based on the answers there is an automated decision (DMN; Hit Policy: Any) deciding the consultation channel. If the customer is over 18 years old, he has no red flag sympotoms and does not take regularly other medications, an automated medication delivery is possible (upper path/happy path). Otherwise the customer gets printed out a ticket for a counter consultation with a pharmacist because due to his handed in data, a detailled, professional anamnesis interview is needed (acc. to the [photo](https://user-images.githubusercontent.com/68386983/144747725-eb9af31f-c111-4efb-ba93-af1e028c0937.png) in the appendix). 
+Based on the answers there is an automated decision (DMN; Hit Policy: Any) deciding the consultation channel. If the customer is over 18 years old, he has no red flag sympotoms and does not take regularly other medications, an automated medication delivery is possible (upper path/happy path). Otherwise the customer gets printed out a ticket for a counter consultation with a pharmacist because due to his handed in data, a detailed, professional anamnesis interview is needed (acc. to the [photo](https://user-images.githubusercontent.com/68386983/144747725-eb9af31f-c111-4efb-ba93-af1e028c0937.png) in the appendix). 
 
 ### Automated consultation channel
 Based on the indicated symptoms and the set preferences by the user, he receives automatically (due to a DMN; Hit Policy: First) a personalized treatment suggestion (like at the counter) with all the medications needed to treat his/her cold symptoms. 
-_Side note: For a real world application we would need to check first, whether the medication is available before we suggest it to the customer. This could be done by colaborating with the company of the dispensing roboter (e.g. BD ROWA) or by a colaboration with the IT-System provider (e.g. ProPharma System AG) of the pharmacy_
+_Side note: For a real world application we would need to check first, whether the medication is available before we suggest it to the customer. This could be done by colaborating with the company of the dispensing robot (e.g. BD ROWA) or in colaboration with the Pharmacy Information System provider (e.g. ProPharma System AG)_
 
-The customer can then decide on the medication he/she wants of the list and submit the request to an external service (e.g. a BD Rowa) who gathers the medication from some auto-store solution. As we do not have such a service available, we simplified with Integromat: A webhook checks whether a new instance is entering the process step 'Deliver Medication' and triggeres the service in Integromat whereby the ID is fetched&locked, a delivery status (in our case always OK, but in reality the actual status of the delivery) as a variable sent back to Camunda.
+The customer can then decide on the medication he/she wants of the list and submit the request to an external service (e.g. a BD Rowa) which gathers the medication from some auto-store solution. As we do not have such a service available, we simplified with Integromat: A webhook checks whether a new instance is entering the process step 'Deliver Medication' and triggeres the service in Integromat whereby the ID is fetched&locked, a delivery status (in our case always OK, but in reality the actual status of the delivery) as a variable sent back to Camunda.
 
 <img src="https://github.com/DigiBP/Team-Golf/blob/0f8b3592603f7d05f5f956c3f841e54a4b635224/Integromat_BD_Rowa_Service.PNG" width="50%" height="50%">
 
 ### Personal consultation by pharmacist channel
-If personal consultation is needed we print a ticket with the key for the customer and send make all the variables from the GForms visible for the consulting pharmacist (both with a simple Camunda form in a user task).
+If personal consultation is needed we print a ticket with the key for the customer and send all the variables from the GForms visible for the consulting pharmacist (both with a simple Camunda form in a user task).
 
 # Outlook
 The digitalized process presented in this readme is a simplified example of digitalization in a health care process. The following aspects complicate digitalization in this area:
@@ -111,6 +111,9 @@ After all, the solution presented here could as well be used as a self-dieagnosi
 
 
 # Additional Information
+
+## Links
+To see the Project-Pitch Video, please use this [link](https://tube.switch.ch/videos/fEU5UNhHQl)
 
 ## Abbreviations, Definitions
 Expression | Explanation
